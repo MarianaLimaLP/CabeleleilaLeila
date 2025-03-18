@@ -1,0 +1,64 @@
+<ion-content class="ion-padding">
+  <div class="home-container">
+    <h1>Bem-vindo ao salão Cabeleleila Leila!</h1>
+
+    <ion-item *ngFor="let agendamento of agendamentos">
+      <ion-label>{{ agendamento.servicoNome }}</ion-label>
+      <ion-label>{{ formatarData(agendamento.data_hora) }}</ion-label>
+      
+      <ion-label *ngIf="isProfissional">Cliente: {{ agendamento.clienteNome }}</ion-label>
+      
+      <ion-button *ngIf="isProfissional && agendamento.estado === 'PENDENTE'"
+        (click)="alterarEstadoAgendamento(agendamento, 'CONFIRMADO')">
+        Confirmar
+      </ion-button>
+      <ion-button *ngIf="isProfissional && agendamento.estado === 'PENDENTE'"
+        (click)="alterarEstadoAgendamento(agendamento, 'CANCELADO')">
+        Cancelar
+      </ion-button>
+    
+      <ion-label>{{ agendamento.estado }}</ion-label>
+    </ion-item>
+
+    <ion-button (click)="mostrarModalAgendamento()" *ngIf="!isProfissional">
+      Agendar Serviço
+    </ion-button>
+
+  </div>
+  <ion-button (click)="deslogar()" color="danger">
+    Sair
+  </ion-button>
+</ion-content>
+
+
+<ion-modal [isOpen]="mostrarModal" (willDismiss)="mostrarModal = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Agendar Serviço</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="mostrarModal = false">Fechar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <form [formGroup]="agendamentoForm" (ngSubmit)="agendarServico()">
+        <ion-item>
+          <ion-label>Serviço</ion-label>
+          <ion-select formControlName="servico">
+            <ion-select-option *ngFor="let servico of servicos" [value]="servico.id">
+              {{ servico.nome }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Data</ion-label>
+          <ion-datetime formControlName="data_hora" display-format="DD/MM/YYYY HH:mm"></ion-datetime>
+        </ion-item>
+        <p>Profissional: <strong>Leila</strong></p>
+        <p>Telefone para alteração: <strong>{{ telefoneProfissional }}</strong></p>
+        <ion-button type="submit" expand="full" [disabled]="agendamentoForm.invalid">Agendar</ion-button>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

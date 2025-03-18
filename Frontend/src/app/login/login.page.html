@@ -1,0 +1,52 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <h1>{{ isRegister ? 'Cadastro' : 'Login' }}</h1>
+    
+    <form [formGroup]="authForm" (ngSubmit)="submit()">
+      
+      <ion-item *ngIf="isRegister">
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input formControlName="nome" type="text"></ion-input>
+      </ion-item>
+      <div *ngIf="authForm.get('nome')?.invalid && authForm.get('nome')?.touched">
+        <ion-label color="danger" *ngIf="authForm.get('nome')?.hasError('required')">Nome é obrigatório</ion-label>
+        <ion-label color="danger" *ngIf="authForm.get('nome')?.hasError('minlength')">Nome deve ter pelo menos 3 caracteres</ion-label>
+      </div>
+      
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+      <div *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched">
+        <ion-label color="danger" *ngIf="authForm.get('email')?.hasError('required')">Email é obrigatório</ion-label>
+        <ion-label color="danger" *ngIf="authForm.get('email')?.hasError('email')">Email inválido</ion-label>
+      </div>
+
+      <ion-item *ngIf="isRegister">
+        <ion-label position="floating">Telefone</ion-label>
+        <ion-input formControlName="telefone" type="tel"></ion-input>
+      </ion-item>
+      <div *ngIf="authForm.get('telefone')?.invalid && authForm.get('telefone')?.touched">
+        <ion-label color="danger" *ngIf="authForm.get('telefone')?.hasError('required')">Telefone é obrigatório</ion-label>
+        <ion-label color="danger" *ngIf="authForm.get('telefone')?.hasError('pattern')">Telefone inválido</ion-label>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input formControlName="senha" type="password"></ion-input>
+      </ion-item>
+      <div *ngIf="authForm.get('senha')?.invalid && authForm.get('senha')?.touched">
+        <ion-label color="danger" *ngIf="authForm.get('senha')?.hasError('required')">Senha é obrigatória</ion-label>
+        <ion-label color="danger" *ngIf="authForm.get('senha')?.hasError('minlength')">Senha deve ter pelo menos 6 caracteres</ion-label>
+      </div>
+
+      <ion-button expand="full" type="submit" [disabled]="authForm.invalid">
+        {{ isRegister ? 'Cadastrar' : 'Entrar' }}
+      </ion-button>
+
+      <ion-button fill="clear" (click)="toggleAuthMode()">
+        {{ isRegister ? 'Já tem conta? Faça login' : 'Criar conta' }}
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
