@@ -8,6 +8,9 @@ Para executar o projeto é necessário baixar ou clonar o projeto, criar um arqu
 DATABASE_URL="mysql://usuario:senha@localhost:3306/cabeleleila"
 ACCESS_JWT="AvaliacaoDSIN"
 ```
+É ideial que se crie a base de dados antes de continuar para evitar erros, dê o seguinte comando em MySQL: 
+`CREATE DATABASE cabeleleila;`
+
 E então, ainda em '/Backend', execute `npm i` e `npm run db:reset`, com isso a profissional Leila é criada, com email 'leila@gmail.com' e senha 'leila123'.
 
 Por fim, vá ao diretório '/Frontend' e execute `ionic serve`, é provável que abra uma aba no seu navegador padrão com a aplicação em execução.
